@@ -29,8 +29,8 @@ const session = await stripe.checkout.sessions.create({
     },
   ],
 
-  success_url: `http://localhost:3000/success?code=${orderCode}`,
-  cancel_url: "http://localhost:3000/checkout",
+  success_url: `https://tuweb.vercel.app/success2?code=${orderCode}`,
+  cancel_url: "/checkout",
 
   metadata: {
   orderCode,
