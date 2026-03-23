@@ -1,26 +1,28 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useSearchParams } from "next/navigation"
 
 export default function SuccessClient() {
-  const params = useSearchParams()
 
   const [image, setImage] = useState(null)
   const [code, setCode] = useState(null)
 
-  useEffect(() => {
-    setCode(params.get("code"))
+ useEffect(() => {
+  // 👉 obtener código desde URL (sin Next hooks)
+  const urlParams = new URLSearchParams(window.location.search)
+  const codeParam = urlParams.get("code")
+  setCode(codeParam)
 
-    const cart = JSON.parse(localStorage.getItem("cart")) || []
+  const cart = JSON.parse(localStorage.getItem("cart")) || []
 
-    if (cart[0]?.image) {
-      setImage(cart[0].image)
-    }
+  if (cart[0]?.image) {
+    setImage(cart[0].image)
+  }
 
-    localStorage.setItem("cart", JSON.stringify([]))
-    window.dispatchEvent(new Event("cartUpdated"))
-  }, [])
+  localStorage.setItem("cart", JSON.stringify([]))
+  window.dispatchEvent(new Event("cartUpdated"))
+
+}, [])
 
   return (
     <div className="bg-[#0B0B0F] text-white min-h-screen flex items-center justify-center px-6">
