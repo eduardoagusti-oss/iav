@@ -46,25 +46,37 @@ export async function POST(req) {
         to: "iavcustomgaming@gmail.com",
         subject: `${orderCode} - Nuevo pedido pagado 💰`,
         html: `
-          <h1>Nuevo pedido</h1>
-          <p>Email: ${data.email}</p>
-          <p>Nombre: ${data.name} ${data.surname}</p>
-          <p>Dirección: ${data.address}</p>
-          <p>Ciudad: ${data.city}</p>
-          <p>Pedido: ${orderCode}</p>
-  `,
+        <h1>Nuevo pedido</h1>
+        <p><strong>Código:</strong> ${orderCode}</p>
+        <p><strong>Email cliente:</strong> ${data.email}</p>
+        <p><strong>Nombre:</strong> ${data.name} ${data.surname}</p>
+        <p><strong>Teléfono:</strong> ${data.phone}</p>
+        <p><strong>Dirección:</strong><br/>
+        ${data.address}<br/>
+        ${data.postalCode}, ${data.city}<br/>
+        ${data.province}, ${data.country}
+        </p>
+        <p><strong>Diseño:</strong></p>
+        <img src="${data.image}" width="400" />
+        `,
       })
       await resend.emails.send({
         from: "onboarding@resend.dev",
-        to: data.email, // 🔥 email del cliente
+        to: "iavcustomgaming@gmail.com",
         subject: `${orderCode} - Tu Pedido IAV ha sido recibido ✅`,
         html: `
-          <h1>Nuevo pedido</h1>
-          <p>Email: ${data.email}</p>
-          <p>Nombre: ${data.name} ${data.surname}</p>
-          <p>Dirección: ${data.address}</p>
-          <p>Ciudad: ${data.city}</p>
-          <p>Pedido: ${orderCode}</p>
+        <h1>Nuevo pedido</h1>
+        <p><strong>Código:</strong> ${orderCode}</p>
+        <p><strong>Email cliente:</strong> ${data.email}</p>
+        <p><strong>Nombre:</strong> ${data.name} ${data.surname}</p>
+        <p><strong>Teléfono:</strong> ${data.phone}</p>
+        <p><strong>Dirección:</strong><br/>
+        ${data.address}<br/>
+        ${data.postalCode}, ${data.city}<br/>
+        ${data.province}, ${data.country}
+        </p>
+        <p><strong>Diseño:</strong></p>
+        <img src="${data.image}" width="400" />
   `,
       })
 
