@@ -47,7 +47,7 @@ export async function POST(req) {
         province: body.province || "",
         country: body.country || "",
         phone: body.phone || "",
-        // image: body.image || "",
+       image: body.image || "",
       }
     })
 
