@@ -7,25 +7,36 @@ export default function SuccessClient() {
   const [image, setImage] = useState(null)
   const [code, setCode] = useState(null)
 
- useEffect(() => {
-  if (typeof window === "undefined") return
+  useEffect(() => {
+    if (typeof window === "undefined") return
 
-  const urlParams = new URLSearchParams(window.location.search)
-  const sessionId = urlParams.get("session_id")
-  const codeParam = urlParams.get("code")
+    const urlParams = new URLSearchParams(window.location.search)
+    const sessionId = urlParams.get("session_id")
+    const codeParam = urlParams.get("code")
 
-  if (codeParam) setCode(codeParam)
+    // ✅ setear código si viene en URL
+    if (codeParam) {
+      setCode(codeParam)
+    }
 
-  if (!sessionId) return
+    // ✅ obtener datos desde Stripe
+    if (sessionId) {
+      fetch(`/api/session?session_id=${sessionId}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.image) setImage(data.image)
+          if (!codeParam && data.code) setCode(data.code)
+        })
+        .catch(err => {
+          console.error("Error fetching session:", err)
+        })
+    }
 
-  fetch(`/api/session?session_id=${sessionId}`)
-    .then(res => res.json())
-    .then(data => {
-      setImage(data.image)
-      if (!codeParam) setCode(data.code)
-    })
+    // 🧹 limpiar carrito
+    localStorage.setItem("cart", JSON.stringify([]))
+    window.dispatchEvent(new Event("cartUpdated"))
 
-}, []), [])
+  }, [])
 
   return (
     <div className="bg-[#0B0B0F] text-white min-h-screen flex items-center justify-center px-6">
