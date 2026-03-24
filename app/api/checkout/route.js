@@ -33,6 +33,7 @@ export async function POST(req) {
       
 
       success_url: `${baseUrl}/success2?code=${orderCode}`,
+      success_url: `${baseUrl}/success2?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${baseUrl}/checkout`,
 
       metadata: {
@@ -52,6 +53,7 @@ export async function POST(req) {
     })
 
     console.log("✅ SESSION URL:", session.url)
+    console.log("🖼 IMAGE RECEIVED:", body.image)
 
     return Response.json({
       url: session.url,
