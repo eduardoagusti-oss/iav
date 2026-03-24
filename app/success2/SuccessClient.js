@@ -8,14 +8,13 @@ export default function SuccessClient() {
   const [code, setCode] = useState(null)
 
  useEffect(() => {
-  // 👉 obtener código desde URL (sin Next hooks)
-  const urlParams = new URLSearchParams(window.location.search)
-  const codeParam = urlParams.get("code")
-  setCode(codeParam)
+  if (typeof window === "undefined") return
 
-  useEffect(() => {
   const urlParams = new URLSearchParams(window.location.search)
   const sessionId = urlParams.get("session_id")
+  const codeParam = urlParams.get("code")
+
+  if (codeParam) setCode(codeParam)
 
   if (!sessionId) return
 
@@ -23,18 +22,10 @@ export default function SuccessClient() {
     .then(res => res.json())
     .then(data => {
       setImage(data.image)
-      setCode(data.code)
+      if (!codeParam) setCode(data.code)
     })
-}, [])
 
-  if (cart[0]?.image) {
-    setImage(cart[0].image)
-  }
-
-  localStorage.setItem("cart", JSON.stringify([]))
-  window.dispatchEvent(new Event("cartUpdated"))
-
-}, [])
+}, []), [])
 
   return (
     <div className="bg-[#0B0B0F] text-white min-h-screen flex items-center justify-center px-6">
