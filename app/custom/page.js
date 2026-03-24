@@ -87,8 +87,8 @@ export default function Custom() {
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
 
-      const width = 3600;
-      const height = 2100;
+      const width = 2400;
+      const height = 1400;
 
       canvas.width = width;
       canvas.height = height;
