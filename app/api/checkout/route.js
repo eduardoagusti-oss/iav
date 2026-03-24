@@ -1,5 +1,6 @@
 import Stripe from "stripe"
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL
+console.log("🌍 BASE URL:", baseUrl)
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
 const generateOrderCode = () => {
   return "IAV-" + Math.random().toString(36).substring(2, 8).toUpperCase()
