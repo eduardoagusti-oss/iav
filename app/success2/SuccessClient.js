@@ -13,7 +13,19 @@ export default function SuccessClient() {
   const codeParam = urlParams.get("code")
   setCode(codeParam)
 
-  const cart = JSON.parse(localStorage.getItem("cart")) || []
+  useEffect(() => {
+  const urlParams = new URLSearchParams(window.location.search)
+  const sessionId = urlParams.get("session_id")
+
+  if (!sessionId) return
+
+  fetch(`/api/session?session_id=${sessionId}`)
+    .then(res => res.json())
+    .then(data => {
+      setImage(data.image)
+      setCode(data.code)
+    })
+}, [])
 
   if (cart[0]?.image) {
     setImage(cart[0].image)
