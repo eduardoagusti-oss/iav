@@ -23,7 +23,7 @@ export async function POST(req) {
             product_data: {
               name: "Tapete personalizado",
             },
-            unit_amount: 2000, // 20€
+            unit_amount: 50, // 2000 = 20€
           },
           quantity: 1,
         },
