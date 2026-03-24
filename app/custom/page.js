@@ -150,7 +150,7 @@ export default function Custom() {
         id: Date.now(),
         image: data.url,
         price: 20,
-        shipping: 5,
+        shipping: 0,
       });
 
       localStorage.setItem("cart", JSON.stringify(cart));
