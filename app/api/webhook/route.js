@@ -65,62 +65,75 @@ export async function POST(req) {
   to: "iavcustomgaming@gmail.com",
   subject: `${orderCode} - Nuevo pedido recibido 💰`,
   html: `
-    <div style="font-family: Arial, sans-serif; background:#0B0B0F; color:#ffffff; padding:20px;">
+    <div style="background:#0B0B0F; padding:40px 20px; font-family: Arial, sans-serif;">
 
-      <div style="max-width:600px; margin:auto;">
+      <!-- CARD -->
+      <div style="max-width:600px; margin:auto; background:#111118; border-radius:16px; padding:30px; border:1px solid #1f1f2a;">
 
         <!-- LOGO -->
-        <div style="text-align:center; margin-bottom: 30px;">
-          <img src="https://res.cloudinary.com/dsnxlhgj5/image/upload/v1774363311/IAVLogo_kea3wn.png" style="width:140px;" />
+        <div style="text-align:center; margin-bottom:25px;">
+          <img src="https://res.cloudinary.com/dsnxlhgj5/image/upload/v1774363311/IAVLogo_kea3wn.png" style="width:120px;" />
         </div>
 
-        <h1 style="color:#A78BFA; text-align:center;">
-          Nuevo pedido recibido 🚀
+        <!-- TITLE -->
+        <h1 style="color:#ffffff; text-align:center; font-size:24px; margin-bottom:10px;">
+          Nuevo pedido recibido
         </h1>
 
-        <p style="text-align:center; margin-bottom:20px;">
-          <strong>Código:</strong> ${orderCode}
+        <p style="text-align:center; color:#a1a1aa; margin-bottom:20px;">
+          Código: <strong style="color:#A78BFA;">${orderCode}</strong>
         </p>
 
-        <hr style="border-color:#333;" />
+        <!-- DIVIDER -->
+        <div style="height:1px; background:#1f1f2a; margin:20px 0;"></div>
 
-        <h3 style="color:#A78BFA;">Datos del cliente</h3>
-        <p><strong>Email:</strong> ${data.email}</p>
-        <p><strong>Nombre:</strong> ${data.name} ${data.surname}</p>
-        <p><strong>Teléfono:</strong> ${data.phone}</p>
+        <!-- CLIENT INFO -->
+        <h3 style="color:#A78BFA; margin-bottom:10px;">Cliente</h3>
 
-        <h3 style="color:#A78BFA;">Dirección</h3>
-        <p>
+        <p style="color:#e4e4e7; margin:4px 0;">
+          ${data.name} ${data.surname}
+        </p>
+        <p style="color:#a1a1aa; margin:4px 0;">
+          ${data.email}
+        </p>
+        <p style="color:#a1a1aa; margin:4px 0;">
+          ${data.phone}
+        </p>
+
+        <!-- ADDRESS -->
+        <h3 style="color:#A78BFA; margin-top:20px;">Envío</h3>
+
+        <p style="color:#e4e4e7; line-height:1.5;">
           ${data.address}<br/>
           ${data.postalCode}, ${data.city}<br/>
           ${data.province}, ${data.country}
         </p>
 
-        <h3 style="color:#A78BFA;">Diseño del tapete</h3>
-        <div style="text-align:center;">
-          <img src="${data.image}" style="width:100%; max-width:400px; border-radius:8px;" />
+        <!-- IMAGE -->
+        <h3 style="color:#A78BFA; margin-top:20px;">Diseño</h3>
+
+        <div style="text-align:center; margin-top:10px;">
+          <img src="${data.image}" style="width:100%; max-width:420px; border-radius:12px; border:1px solid #1f1f2a;" />
         </div>
 
-        <hr style="margin: 30px 0; border-color:#333;" />
+        <!-- DIVIDER -->
+        <div style="height:1px; background:#1f1f2a; margin:30px 0;"></div>
 
-        <!-- Firma -->
-        <p>
+        <!-- SIGNATURE -->
+        <p style="color:#e4e4e7;">
           Un saludo,<br/>
-          <strong>Equipo IAV Custom Gaming</strong>
+          <strong>IAV Custom Gaming</strong>
         </p>
 
-        <!-- Footer -->
-        <div style="margin-top: 30px; font-size: 12px; color: #999; text-align:center;">
-          <p>
-            Este es un correo automático generado por IAV Custom Gaming.
-          </p>
-
-          <p>
-            © ${new Date().getFullYear()} IAV Custom Gaming — Todos los derechos reservados
-          </p>
-        </div>
-
       </div>
+
+      <!-- FOOTER -->
+      <div style="text-align:center; margin-top:20px; font-size:12px; color:#6b7280;">
+        © ${new Date().getFullYear()} IAV Custom Gaming  
+        <br/>
+        Este es un correo automático
+      </div>
+
     </div>
   `,
 })
