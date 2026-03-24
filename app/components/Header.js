@@ -29,27 +29,13 @@ export default function Header() {
 
         <div className="flex items-center gap-6 text-sm font-medium text-gray-400">
 
-          <a className="hover:text-white transition cursor-pointer">
+          <a href="/contact" className="hover:text-white transition">
             Contacto
           </a>
 
           <a href="/cart" className="hover:text-white transition">
             Carrito ({count})
           </a>
-
-          <button className="
-            px-4 py-2 
-            rounded-lg 
-            border border-white/20 
-            text-gray-300
-            hover:text-white
-            hover:border-white/40 
-            hover:bg-white/5 
-            transition
-          ">
-            Log in
-          </button>
-
         </div>
 
       </div>
