@@ -56,7 +56,7 @@ export async function POST(req) {
       })
       await resend.emails.send({
         from: "onboarding@resend.dev",
-        to: "iavcustomgaming@gmail.com",
+        to: data.email, // 🔥 email del cliente
         subject: `${orderCode} - Tu Pedido IAV ha sido recibido ✅`,
         html: `
           <h1>Nuevo pedido</h1>
