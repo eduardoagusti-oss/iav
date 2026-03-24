@@ -32,7 +32,7 @@ export async function POST(req) {
 
       
 
-      success_url: `${baseUrl}/success2?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${baseUrl}/success2?code=${orderCode}`,
       cancel_url: `${baseUrl}/checkout`,
 
       metadata: {
