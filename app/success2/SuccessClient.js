@@ -16,6 +16,7 @@ export default function SuccessClient() {
     const sessionId = urlParams.get("session_id")
 
     console.log("SESSION ID:", sessionId)
+    
 
     if (!sessionId) {
       console.error("❌ No session_id en la URL")
@@ -40,7 +41,9 @@ export default function SuccessClient() {
       })
 
   }, [])
-
+if (sessionId) {
+  localStorage.removeItem("cart")
+}
   return (
     <div className="bg-[#0B0B0F] text-white min-h-screen flex items-center justify-center px-6">
       <div className="max-w-[600px] w-full text-center space-y-8">
@@ -82,4 +85,5 @@ export default function SuccessClient() {
       </div>
     </div>
   )
+  
 }
