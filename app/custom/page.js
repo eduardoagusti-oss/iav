@@ -81,87 +81,92 @@ export default function Custom() {
 
   // 🛒 AÑADIR AL CARRITO (CON SUBIDA)
   const handleAddToCart = async () => {
-    try {
-      if (!image) return;
+  try {
+    if (!image) return;
 
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
 
-      const width = 1200;
-      const height = 700;
+    // 🔥 RESOLUCIÓN ALTA (producción)
+    const width = 3000;
+    const height = 1750;
 
-      canvas.width = width;
-      canvas.height = height;
+    canvas.width = width;
+    canvas.height = height;
 
-      ctx.fillStyle = "#ffffff";
-      ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, width, height);
 
-      const userImg = new Image();
-      userImg.src = image;
+    const userImg = new Image();
+    userImg.src = image;
 
-      const overlayImg = new Image();
-      overlayImg.src = "/6035.png";
+    const overlayImg = new Image();
+    overlayImg.src = "/6035.png";
 
-      await Promise.all([
-        new Promise((res) => (userImg.onload = res)),
-        new Promise((res) => (overlayImg.onload = res)),
-      ]);
+    await Promise.all([
+      new Promise((res) => (userImg.onload = res)),
+      new Promise((res) => (overlayImg.onload = res)),
+    ]);
 
-      const imgRatio = userImg.width / userImg.height;
-      const canvasRatio = width / height;
+    const imgRatio = userImg.width / userImg.height;
+    const canvasRatio = width / height;
 
-      let drawWidth, drawHeight;
+    let drawWidth, drawHeight;
 
-      if (imgRatio > canvasRatio) {
-        drawHeight = height * scale;
-        drawWidth = drawHeight * imgRatio;
-      } else {
-        drawWidth = width * scale;
-        drawHeight = drawWidth / imgRatio;
-      }
+    if (imgRatio > canvasRatio) {
+      drawHeight = height * scale;
+      drawWidth = drawHeight * imgRatio;
+    } else {
+      drawWidth = width * scale;
+      drawHeight = drawWidth / imgRatio;
+    }
 
-      const x = (width - drawWidth) / 2;
-      const y = (height - drawHeight) / 2;
+    const x = (width - drawWidth) / 2;
+    const y = (height - drawHeight) / 2;
 
-      ctx.drawImage(userImg, x, y, drawWidth, drawHeight);
-      ctx.drawImage(overlayImg, 0, 0, width, height);
+    ctx.drawImage(userImg, x, y, drawWidth, drawHeight);
+    ctx.drawImage(overlayImg, 0, 0, width, height);
 
-      const imageData = canvas.toDataURL("image/png");
+    // 🔥 CAMBIO CLAVE → BLOB en vez de base64
+    const blob = await new Promise((resolve) =>
+      canvas.toBlob(resolve, "image/jpeg", 0.9)
+    );
 
-      // 🚀 subir al servidor
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ image: imageData }),
-      });
+    // 📦 Enviar como FormData
+    const formData = new FormData();
+    formData.append("file", blob, "design.jpg");
 
-      const data = await res.json();
+    const res = await fetch("/api/upload", {
+      method: "POST",
+      body: formData,
+    });
 
-      if (!res.ok) {
-        throw new Error(data.error);
-      }
+    const data = await res.json();
 
-      // 🛒 guardar en carrito
-      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    if (!res.ok) {
+      throw new Error(data.error);
+    }
 
-      cart.push({
+    // 🛒 SOLO 1 ITEM EN CARRITO
+    const cart = [
+      {
         id: Date.now(),
         image: data.url,
         price: 20,
         shipping: 0,
-      });
+      },
+    ];
 
-      localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem("cart", JSON.stringify(cart));
+    window.dispatchEvent(new Event("cartUpdated"));
 
-      window.location.href = "/cart";
+    window.location.href = "/cart";
 
-    } catch (err) {
-      console.error(err);
-      alert("Error al añadir al carrito");
-    }
-  };
+  } catch (err) {
+    console.error(err);
+    alert("Error al añadir al carrito");
+  }
+};
 
   return (
     <div className="bg-[#0B0B0F] text-white min-h-screen py-20">

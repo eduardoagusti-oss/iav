@@ -8,20 +8,35 @@ cloudinary.config({
 
 export async function POST(req) {
   try {
-    const { image } = await req.json()
+    const formData = await req.formData()
+    const file = formData.get("file")
 
-    if (!image) {
-      return Response.json({ error: "No image" }, { status: 400 })
+    if (!file) {
+      return Response.json({ error: "No file" }, { status: 400 })
     }
 
-    const result = await cloudinary.uploader.upload(image, {
-      folder: "tapetes",
+    // 🔥 convertir a buffer
+    const bytes = await file.arrayBuffer()
+    const buffer = Buffer.from(bytes)
+
+    // 🚀 subir a cloudinary
+    const result = await new Promise((resolve, reject) => {
+      cloudinary.uploader.upload_stream(
+        {
+          folder: "tapetes",
+          resource_type: "image",
+        },
+        (error, result) => {
+          if (error) reject(error)
+          else resolve(result)
+        }
+      ).end(buffer)
     })
 
     return Response.json({ url: result.secure_url })
 
   } catch (err) {
-    console.error(err)
+    console.error("❌ UPLOAD ERROR:", err)
     return Response.json({ error: err.message }, { status: 500 })
   }
 }
