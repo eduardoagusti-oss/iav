@@ -6,29 +6,40 @@ export default function SuccessClient() {
 
   const [image, setImage] = useState(null)
   const [code, setCode] = useState(null)
-console.log("🔥 COMPONENT MOUNTED")
+
   useEffect(() => {
-  if (typeof window === "undefined") return
+    if (typeof window === "undefined") return
 
-  const urlParams = new URLSearchParams(window.location.search)
-  const sessionId = urlParams.get("session_id")
+    console.log("🔥 COMPONENT MOUNTED")
 
-  console.log("SESSION ID:", sessionId)
+    const urlParams = new URLSearchParams(window.location.search)
+    const sessionId = urlParams.get("session_id")
 
-  if (!sessionId) return
+    console.log("SESSION ID:", sessionId)
 
-  fetch(`/api/session?session_id=${sessionId}`)
-    .then(res => res.json())
-    .then(data => {
-      console.log("DATA:", data)
+    if (!sessionId) {
+      console.error("❌ No session_id en la URL")
+      return
+    }
 
-      if (data.image) setImage(data.image)
-      if (data.code) setCode(data.code)
-    })
-    .catch(err => console.error(err))
-console.log("SESSION ID:", sessionId)
-console.log("DATA FROM API:", data)
-}, [])
+    fetch(`/api/session?session_id=${sessionId}`)
+      .then(res => res.json())
+      .then(data => {
+        console.log("✅ DATA FROM API:", data)
+
+        if (data.image) {
+          setImage(data.image)
+        }
+
+        if (data.code) {
+          setCode(data.code)
+        }
+      })
+      .catch(err => {
+        console.error("❌ FETCH ERROR:", err)
+      })
+
+  }, [])
 
   return (
     <div className="bg-[#0B0B0F] text-white min-h-screen flex items-center justify-center px-6">
@@ -51,6 +62,10 @@ console.log("DATA FROM API:", data)
           <div className="bg-[#1A1A22] p-4 rounded-xl">
             <img src={image} className="rounded-lg mx-auto max-h-[300px]" />
           </div>
+        )}
+
+        {!image && (
+          <p className="text-gray-500">Cargando imagen...</p>
         )}
 
         <p className="text-gray-400">
