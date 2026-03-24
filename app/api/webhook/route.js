@@ -65,59 +65,62 @@ export async function POST(req) {
   to: "iavcustomgaming@gmail.com",
   subject: `${orderCode} - Nuevo pedido recibido 💰`,
   html: `
-    <div style="font-family: Arial, sans-serif; color: #111; max-width: 600px; margin: auto;">
+    <div style="font-family: Arial, sans-serif; background:#0B0B0F; color:#ffffff; padding:20px;">
 
-      <!-- LOGO -->
-      <div style="text-align:center; margin-bottom: 30px;">
-        <img src="https://res.cloudinary.com/dsnxlhgj5/image/upload/v1774363311/IAVLogo_kea3wn.png" style="width:140px;" />
-      </div>
+      <div style="max-width:600px; margin:auto;">
 
-      <h1 style="color:#4C1D95; text-align:center;">
-        Nuevo pedido recibido 🚀
-      </h1>
+        <!-- LOGO -->
+        <div style="text-align:center; margin-bottom: 30px;">
+          <img src="https://res.cloudinary.com/dsnxlhgj5/image/upload/v1774363311/IAVLogo_kea3wn.png" style="width:140px;" />
+        </div>
 
-      <p style="text-align:center; margin-bottom:20px;">
-        <strong>Código:</strong> ${orderCode}
-      </p>
+        <h1 style="color:#A78BFA; text-align:center;">
+          Nuevo pedido recibido 🚀
+        </h1>
 
-      <hr/>
-
-      <h3>Datos del cliente</h3>
-      <p><strong>Email:</strong> ${data.email}</p>
-      <p><strong>Nombre:</strong> ${data.name} ${data.surname}</p>
-      <p><strong>Teléfono:</strong> ${data.phone}</p>
-
-      <h3>Dirección</h3>
-      <p>
-        ${data.address}<br/>
-        ${data.postalCode}, ${data.city}<br/>
-        ${data.province}, ${data.country}
-      </p>
-
-      <h3>Diseño del tapete</h3>
-      <div style="text-align:center;">
-        <img src="${data.image}" style="width:100%; max-width:400px; border-radius:8px;" />
-      </div>
-
-      <hr style="margin: 30px 0;" />
-
-      <!-- Firma -->
-      <p>
-        Un saludo,<br/>
-        <strong>Equipo IAV Custom Gaming</strong>
-      </p>
-
-      <!-- Footer -->
-      <div style="margin-top: 30px; font-size: 12px; color: #666; text-align:center;">
-        <p>
-          Este es un correo automático generado por IAV Custom Gaming.
+        <p style="text-align:center; margin-bottom:20px;">
+          <strong>Código:</strong> ${orderCode}
         </p>
 
-        <p>
-          © ${new Date().getFullYear()} IAV Custom Gaming — Todos los derechos reservados
-        </p>
-      </div>
+        <hr style="border-color:#333;" />
 
+        <h3 style="color:#A78BFA;">Datos del cliente</h3>
+        <p><strong>Email:</strong> ${data.email}</p>
+        <p><strong>Nombre:</strong> ${data.name} ${data.surname}</p>
+        <p><strong>Teléfono:</strong> ${data.phone}</p>
+
+        <h3 style="color:#A78BFA;">Dirección</h3>
+        <p>
+          ${data.address}<br/>
+          ${data.postalCode}, ${data.city}<br/>
+          ${data.province}, ${data.country}
+        </p>
+
+        <h3 style="color:#A78BFA;">Diseño del tapete</h3>
+        <div style="text-align:center;">
+          <img src="${data.image}" style="width:100%; max-width:400px; border-radius:8px;" />
+        </div>
+
+        <hr style="margin: 30px 0; border-color:#333;" />
+
+        <!-- Firma -->
+        <p>
+          Un saludo,<br/>
+          <strong>Equipo IAV Custom Gaming</strong>
+        </p>
+
+        <!-- Footer -->
+        <div style="margin-top: 30px; font-size: 12px; color: #999; text-align:center;">
+          <p>
+            Este es un correo automático generado por IAV Custom Gaming.
+          </p>
+
+          <p>
+            © ${new Date().getFullYear()} IAV Custom Gaming — Todos los derechos reservados
+          </p>
+        </div>
+
+      </div>
     </div>
   `,
 })
